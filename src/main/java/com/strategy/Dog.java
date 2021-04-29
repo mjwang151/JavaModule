@@ -1,11 +1,13 @@
 package com.strategy;
 
+import java.util.Comparator;
+
 /**
  * @author mjwang
  * @version 1.0
  * @date 2021/4/29 22:10
  */
-public class Dog extends  Animal implements Comparable{
+public class Dog extends  Animal implements Comparator {
 
 
     public Dog(Attack attack, Move move) {
@@ -28,8 +30,9 @@ public class Dog extends  Animal implements Comparable{
     }
 
 
+
     @Override
-    public int compareTo(Object o) {
+    public int compare(Object o1, Object o2) {
         return 0;
     }
 }
