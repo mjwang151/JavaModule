@@ -1,4 +1,4 @@
-package com.selfAnnotation;
+package com.selfAnnotation.anno;
 
 import java.lang.annotation.*;
 

@@ -1,5 +1,6 @@
 package com.selfAnnotation;
 
+import com.selfAnnotation.anno.MethodAnnotation;
 import org.springframework.stereotype.Component;
 
 @Component

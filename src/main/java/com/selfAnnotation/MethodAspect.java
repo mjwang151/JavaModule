@@ -1,5 +1,6 @@
 package com.selfAnnotation;
 
+import com.selfAnnotation.anno.MethodAnnotation;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -16,7 +17,7 @@ import java.lang.reflect.Method;
 @Component
 public class MethodAspect {
 
-    @Pointcut("@annotation(com.selfAnnotation.MethodAnnotation)")
+    @Pointcut("@annotation(com.selfAnnotation.anno.MethodAnnotation)")
     public void methodAspectAnno(){};
 
     @After("methodAspectAnno()")
