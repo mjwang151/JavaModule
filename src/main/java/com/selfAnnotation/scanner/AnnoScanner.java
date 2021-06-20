@@ -2,7 +2,6 @@ package com.selfAnnotation.scanner;
 
 import com.selfAnnotation.anno.ApiAnno;
 import com.selfAnnotation.anno.ApiAnnoMethod;
-import com.selfAnnotation.service.ApiInter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
@@ -11,11 +10,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * springboot中通过applicationcontext上下文查找注解类或方法并执行
+ */
 @Slf4j
 @Component
 public class AnnoScanner  implements ApplicationListener<ContextRefreshedEvent> {
@@ -58,10 +59,16 @@ public class AnnoScanner  implements ApplicationListener<ContextRefreshedEvent> 
                     ApiAnnoMethod anm = (ApiAnnoMethod) v.getAnnotation();
                     System.out.println("==" + anm.value());
                     if(name.equals(anm.value())){
-                        try {
-                            v.getMethod().invoke(v.getClassName().getDeclaredConstructor().newInstance() , null);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        Object proxyObject  = applicationContext.getBean(v.getClassName());
+                        Method[] methods = proxyObject.getClass().getMethods();
+                        for(Method method : methods) {
+                            if(method.getName().equalsIgnoreCase(v.getMethod().getName())) {
+                                try {
+                                    method.invoke(proxyObject, null);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     }
                 });
@@ -107,4 +114,5 @@ public class AnnoScanner  implements ApplicationListener<ContextRefreshedEvent> 
         }
         return list;
     }
+
 }

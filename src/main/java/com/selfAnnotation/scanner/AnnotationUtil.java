@@ -1,9 +1,7 @@
 package com.selfAnnotation.scanner;
 
 import com.selfAnnotation.anno.ApiAnnoMethod;
-import com.selfAnnotation.service.ApiAnnoService;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.bridge.Message;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -12,12 +10,12 @@ import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.util.ClassUtils;
 
-import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- *
+ * 普通方法寻找注解，通过反射查找
  */
 @Slf4j
 public class AnnotationUtil {
