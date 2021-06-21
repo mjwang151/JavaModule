@@ -2,6 +2,7 @@ package com.selfAnnotation.service;
 
 import com.selfAnnotation.anno.ApiAnno;
 import com.selfAnnotation.anno.ApiAnnoMethod;
+import com.selfAnnotation.aoplog.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,15 +30,16 @@ public class ApiAnnoService implements ApiInter {
         return null;
     }
 
-
     @ApiAnnoMethod("test2")
     public void test2(){
         log.info("-----------------进入了方法2-----------------");
         qidong.stream().forEach(System.out::println);
     }
 
-    @ApiAnnoMethod("test3")
+    @Log(operationType="方法3",operationName="方法3")
     public void test3(){
         log.info("-----------------进入了方法3-----------------");
     }
+
+
 }

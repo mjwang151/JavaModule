@@ -1,5 +1,6 @@
 package com.selfAnnotation.service;
 
+import com.selfAnnotation.aoplog.Log;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 

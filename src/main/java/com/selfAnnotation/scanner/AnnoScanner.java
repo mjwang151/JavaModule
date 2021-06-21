@@ -57,7 +57,6 @@ public class AnnoScanner  implements ApplicationListener<ContextRefreshedEvent> 
             if(annoMethod != null && annoMethod.size() > 0 ){
                 annoMethod.stream().forEach(v->{
                     ApiAnnoMethod anm = (ApiAnnoMethod) v.getAnnotation();
-                    System.out.println("==" + anm.value());
                     if(name.equals(anm.value())){
                         Object proxyObject  = applicationContext.getBean(v.getClassName());
                         Method[] methods = proxyObject.getClass().getMethods();
@@ -102,6 +101,11 @@ public class AnnoScanner  implements ApplicationListener<ContextRefreshedEvent> 
             Method[] ms = beanClass.getMethods();
             for (Method method : ms) {
                 boolean flag = method.isAnnotationPresent(annotationType);
+                if(beanClass.getName().indexOf("ApiAnnoService")>-1){
+                    if(method.getName().equals("test2")){
+                        System.out.println(111);
+                    }
+                }
                 if (flag) {
                     log.info("找到注解类："+beanClass.getName());
                     Annotation annotation = method.getAnnotation(annotationType);
