@@ -3,16 +3,12 @@ package com.selfAnnotation.aoplog;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-
 
 
 /**
@@ -24,22 +20,22 @@ import java.lang.reflect.Method;
 
 @Aspect
 @Component
-public class SystemLogAspect {
+public class ApiAnnoMethodAspect {
 
 
-    private  static  final Logger logger = LoggerFactory.getLogger(SystemLogAspect. class);
+    private  static  final Logger logger = LoggerFactory.getLogger(ApiAnnoMethodAspect. class);
 
 //    @Pointcut("execution (* com.selfAnnotation..*.*(..))")
-    @Pointcut("@annotation(com.selfAnnotation.aoplog.Log)")
-    public  void controllerAspect() {
+    @Pointcut("@annotation(com.selfAnnotation.anno.ApiAnnoMethod)")
+    public  void apiAnnoMethodAspect() {
     }
 
 
 
     //配置controller环绕通知,使用在方法aspect()上注册的切入点
-    @Around("controllerAspect()")
+    @Around("apiAnnoMethodAspect()")
     public void around(JoinPoint joinPoint){
-        System.out.println("==========开始执行controller环绕通知===============");
+        System.out.println("==========开始执行ApiAnnoMethod环绕通知===============");
         long start = System.currentTimeMillis();
         try {
             ((ProceedingJoinPoint) joinPoint).proceed();
@@ -47,7 +43,7 @@ public class SystemLogAspect {
             if(logger.isInfoEnabled()){
                 logger.info("around " + joinPoint + "\tUse time : " + (end - start) + " ms!");
             }
-            System.out.println("==========结束执行controller环绕通知===============");
+            System.out.println("==========结束执行ApiAnnoMethod环绕通知===============");
         } catch (Throwable e) {
             long end = System.currentTimeMillis();
             if(logger.isInfoEnabled()){
@@ -63,7 +59,7 @@ public class SystemLogAspect {
      * @param joinPoint
      * @param e
      */
-    @AfterThrowing(pointcut = "controllerAspect()", throwing="e")
+    @AfterThrowing(pointcut = "apiAnnoMethodAspect()", throwing="e")
     public  void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
         try {
             String targetName = joinPoint.getTarget().getClass().getName();

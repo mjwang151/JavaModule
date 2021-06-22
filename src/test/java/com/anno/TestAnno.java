@@ -13,7 +13,7 @@ public class TestAnno {
     ApiAnnoService apiAnnoService;
     @org.junit.jupiter.api.Test
     public void test(){
-//        annoScanner.findAnnoByMethodName("test2");
-        apiAnnoService.test3();
+        annoScanner.findAnnoByMethodName("test3");
+//        apiAnnoService.test3();
     }
 }

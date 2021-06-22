@@ -6,9 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import javax.xml.stream.util.XMLEventAllocator;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -100,16 +102,12 @@ public class AnnoScanner  implements ApplicationListener<ContextRefreshedEvent> 
             }
             Method[] ms = beanClass.getMethods();
             for (Method method : ms) {
+                //使用aop时不管用
                 boolean flag = method.isAnnotationPresent(annotationType);
-                if(beanClass.getName().indexOf("ApiAnnoService")>-1){
-                    if(method.getName().equals("test2")){
-                        System.out.println(111);
-                    }
-                }
-                if (flag) {
+                Annotation annotation1 = AnnotationUtils.findAnnotation(method, annotationType);
+                if(annotation1 != null){
                     log.info("找到注解类："+beanClass.getName());
-                    Annotation annotation = method.getAnnotation(annotationType);
-                    AnnoBean annoBean = new AnnoBean(beanClass,method,(T)annotation);
+                    AnnoBean annoBean = new AnnoBean(beanClass,method,(T) annotation1);
                     list.add(annoBean);
                 }
             }

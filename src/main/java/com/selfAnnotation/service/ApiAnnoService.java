@@ -37,6 +37,7 @@ public class ApiAnnoService implements ApiInter {
     }
 
     @Log(operationType="方法3",operationName="方法3")
+    @ApiAnnoMethod("test3")
     public void test3(){
         log.info("-----------------进入了方法3-----------------");
     }
