@@ -8,9 +8,7 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.StringUtils;
 
-import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +29,7 @@ public class SpringCache {
      *
      * @return
      */
-    @Bean(value = "test111")
+    @Bean(value = "simpleCache")
     public CacheManager caffeineCacheManager() {
         SimpleCacheManager manager = new SimpleCacheManager();
         List<CaffeineCache> caches = Arrays.asList(
@@ -46,11 +44,13 @@ public class SpringCache {
         return manager;
     }
 
-    @Cacheable(value = bizCache_30_sec, cacheManager = "test111", keyGenerator = "getKey")
-    public String testCache() {
-        System.out.println("execmethod = 11111111111111" );
+    @Cacheable(value = bizCache_10_sec, cacheManager = "simpleCache", key = "#id")
+    public String testCache(String id) {
+        System.out.println("execmethodId = "+id );
         return LocalDateTime.now().toString();
     }
+
+
     /**
      * 本地缓存自动生成key
      *
